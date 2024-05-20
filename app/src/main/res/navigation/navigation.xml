@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/mainFragment2">
+    <fragment
+        android:id="@+id/mainFragment2"
+        android:name="com.example.a6semlast.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment2_to_fragment13"
+            app:destination="@id/fragment13" />
+        <action
+            android:id="@+id/action_mainFragment2_to_apiFragment2"
+            app:destination="@id/apiFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment13"
+        android:name="com.example.a6semlast.fragments.Fragment1"
+        android:label="fragment1"
+        tools:layout="@layout/fragment1" >
+        <action
+            android:id="@+id/action_fragment13_to_fragment23"
+            app:destination="@id/fragment23" />
+        <action
+            android:id="@+id/action_fragment13_to_loop_fragment2"
+            app:destination="@id/loop_fragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment23"
+        android:name="com.example.a6semlast.fragments.Fragment2"
+        android:label="fragment2"
+        tools:layout="@layout/fragment2" >
+        <action
+            android:id="@+id/action_fragment23_to_fragment13"
+            app:destination="@id/fragment13" />
+        <action
+            android:id="@+id/action_fragment23_to_loop_fragment2"
+            app:destination="@id/loop_fragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/loop_fragment2"
+        android:name="com.example.a6semlast.fragments.loop_fragment"
+        android:label="fragment_loop_fragment"
+        tools:layout="@layout/fragment_loop_fragment" >
+        <action
+            android:id="@+id/action_loop_fragment2_to_fragment23"
+            app:destination="@id/fragment23" />
+        <action
+            android:id="@+id/action_loop_fragment2_to_fragment13"
+            app:destination="@id/fragment13" />
+    </fragment>
+    <fragment
+        android:id="@+id/apiFragment2"
+        android:name="com.example.a6semlast.fragments.ApiFragment"
+        android:label="fragment_api"
+        tools:layout="@layout/fragment_api" />
+</navigation>

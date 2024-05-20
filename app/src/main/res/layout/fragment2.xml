@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.Fragment2">
+
+    <!-- Фрейм для отображения содержимого -->
+    <FrameLayout
+        android:id="@+id/frameLayoutContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomPanel" >
+
+        <ListView
+            android:id="@+id/listViewTasks2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="0dp"
+            android:visibility="visible" />
+    </FrameLayout>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/bottomPanel"
+        android:background="@android:color/darker_gray" />
+
+    <!-- Панель с кнопками -->
+    <LinearLayout
+        android:id="@+id/bottomPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp">
+
+        <!-- Кнопка "Дом" -->
+        <Button
+            android:id="@+id/buttonHomeCal"
+            android:text=""
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/home4"
+            android:drawablePadding="8dp"
+
+            android:contentDescription="@string/izobrKnipkiHome"/>
+
+        <!-- Кнопка "Календарь" -->
+        <Button
+            android:id="@+id/buttonCalendarCal"
+            android:text=""
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/calendar2"
+            android:drawablePadding="15dp"
+
+            android:contentDescription="@string/izobrKnopkiKalendar"/>
+
+        <!-- Кнопка "Поиск" -->
+        <Button
+            android:id="@+id/buttonSearchCal"
+            android:layout_width="@dimen/zero"
+            android:text=""
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/loop1"
+            android:drawablePadding="@dimen/margin_small"
+
+            android:contentDescription="@string/IzobrKnopkiPoisk"/>
+    </LinearLayout>
+</RelativeLayout>

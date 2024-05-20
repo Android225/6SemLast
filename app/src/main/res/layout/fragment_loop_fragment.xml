@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.loop_fragment">
+
+    <!-- Кнопка "Назад" -->
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        android:layout_margin="16dp" />
+
+    <!-- Заголовок -->
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/search"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:padding="16dp"/>
+
+    <!-- Поле ввода для поиска -->
+    <EditText
+        android:id="@+id/editTextSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_text_to_find"
+        android:padding="16dp"/>
+
+    <!-- Кнопки "Очистить" и "Поиск" на одном уровне -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_marginTop="8dp">
+
+        <!-- Кнопка "Очистить" -->
+        <Button
+            android:id="@+id/buttonClear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/clear"
+            android:visibility="gone"
+            />
+
+        <!-- Пустой элемент для заполнения пространства между кнопками -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <!-- Кнопка для запуска поиска -->
+        <Button
+            android:id="@+id/buttonStartSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/find"/>
+    </LinearLayout>
+
+    <!-- Список результатов поиска -->
+    <ListView
+        android:id="@+id/listViewSearchResults"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/bottomPanel"
+        android:background="@android:color/darker_gray" />
+
+    <!-- Панель с кнопками -->
+    <LinearLayout
+        android:id="@+id/bottomPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp">
+
+        <!-- Кнопка "Дом" -->
+        <Button
+            android:id="@+id/buttonHomeLp"
+            android:text=""
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/home4"
+            android:drawablePadding="8dp"
+
+            android:contentDescription="@string/Homs"/>
+
+        <!-- Кнопка "Календарь" -->
+        <Button
+            android:id="@+id/buttonCalendarLp"
+            android:text=""
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/calendar2"
+            android:drawablePadding="15dp"
+
+            android:contentDescription="@string/loops"/>
+
+        <!-- Кнопка "Поиск" -->
+        <Button
+            android:id="@+id/buttonSearchLp"
+            android:layout_width="@dimen/zero"
+            android:text=""
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/loop1"
+            android:drawablePadding="@dimen/margin_small"
+
+            android:contentDescription="@string/serchs"/>
+
+    </LinearLayout>
+</LinearLayout>
