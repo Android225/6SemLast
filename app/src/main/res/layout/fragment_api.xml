@@ -5,10 +5,22 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ApiFragment">
 
+    <!-- RecyclerView для отображения результатов поиска -->
+
+    <!-- Остальные элементы макета остаются без изменений -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchResultsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="239dp"
+        android:layout_below="@+id/searchButton"
+        android:layout_marginTop="7dp"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="280dp" />
 
     <TextView
         android:id="@+id/resultTextView"
@@ -19,15 +31,20 @@
         android:visibility="gone"
         android:textSize="18sp"/>
 
+    <!-- Элемент для отображения состояния загрузки -->
+
     <Button
         android:id="@+id/buttonRefresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/resultTextView"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/recyclerView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="149dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="144dp"
         android:text="Обновить" />
 
-    <!-- Элемент для отображения состояния загрузки -->
     <ProgressBar
         android:id="@+id/loading"
         android:layout_width="wrap_content"
@@ -40,12 +57,13 @@
         android:id="@+id/searchEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Введите запрос"
-        android:layout_marginTop="16dp"
         android:layout_below="@id/buttonRefresh"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:inputType="text" />
+        android:hint="Введите запрос"
+        android:inputType="text"
+        android:minHeight="48dp" />
 
     <!-- Кнопка для выполнения поиска -->
     <Button
