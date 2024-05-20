@@ -10,6 +10,7 @@ interface HolidayApi {
         @Query("api_key") apiKey: String,
         @Query("country") country: String,
         @Query("year") year: Int,
-        @Query("query") query: String // Добавляем параметр для поиска
+        @Query("query") query: String // Обновляем метод для поиска
     ): HolidayResponse
 }
+
