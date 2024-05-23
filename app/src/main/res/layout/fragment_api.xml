@@ -21,9 +21,9 @@
         android:id="@+id/searchEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/recyclerView"
+        android:layout_alignParentTop="true"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="192dp"
         android:layout_marginEnd="16dp"
         android:hint="Введите запрос"
         android:inputType="text"
@@ -68,18 +68,22 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp" />
 
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
-
     <!-- Кнопка для обновления данных -->
 
     <!-- Кнопка для очистки истории -->
 
     <!-- Текст для отображения состояния результата -->
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="83dp"
+        android:layout_height="69dp"
+        android:layout_alignEnd="@+id/recyclerView"
+        android:layout_alignBottom="@+id/recyclerView"
+        android:layout_marginEnd="144dp"
+        android:layout_marginBottom="51dp"
+        android:visibility="gone"
+        tools:visibility="gone" />
 
     <Button
         android:id="@+id/buttonRefresh"

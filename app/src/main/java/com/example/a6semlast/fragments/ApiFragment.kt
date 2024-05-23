@@ -85,7 +85,7 @@ class ApiFragment : Fragment() {
     }
 
     private fun fetchHolidays() {
-        loadingProgressBar.visibility = View.VISIBLE
+        loadingProgressBar.visibility = View.VISIBLE // Показываем ProgressBar перед выполнением запроса
         GlobalScope.launch(Dispatchers.Main) {
             val response = try {
                 RetrofitInstance.api.getHolidays(apiKey, country, year, "")
@@ -98,6 +98,8 @@ class ApiFragment : Fragment() {
                 allHolidays = it.response.holidays // Сохраняем полный список праздников
                 handleResponse(it)
             }
+
+            loadingProgressBar.visibility = View.GONE // Скрываем ProgressBar после выполнения запроса
         }
     }
 
@@ -125,7 +127,7 @@ class ApiFragment : Fragment() {
     }
 
     private fun searchHolidays(query: String) {
-        loadingProgressBar.visibility = View.VISIBLE
+        loadingProgressBar.visibility = View.VISIBLE // Показываем ProgressBar перед выполнением запроса
         GlobalScope.launch(Dispatchers.Main) {
             val filteredHolidays = allHolidays.filter { holiday ->
                 holiday.name.contains(query, ignoreCase = true)
@@ -139,6 +141,8 @@ class ApiFragment : Fragment() {
 
             // Передаем результаты поиска для обработки
             handleResponse(holidayResponse, isSearch = true)
+
+            loadingProgressBar.visibility = View.GONE // Скрываем ProgressBar после выполнения запроса
         }
     }
 
