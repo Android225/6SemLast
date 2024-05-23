@@ -5,22 +5,101 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ApiFragment">
 
+    <!-- Поле ввода для поиска -->
+
+    <!-- RecyclerView для отображения истории поиска -->
+
+    <!-- Кнопка для выполнения поиска -->
+
     <!-- RecyclerView для отображения результатов поиска -->
 
-    <!-- Остальные элементы макета остаются без изменений -->
+    <!-- RecyclerView для отображения всех элементов -->
+
+    <!-- Элемент для отображения состояния загрузки -->
+
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recyclerView"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Введите запрос"
+        android:inputType="text"
+        android:minHeight="48dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecyclerHistory"
+        android:layout_width="match_parent"
+        android:layout_height="104dp"
+        android:layout_below="@id/searchEditText"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="23dp" />
+
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/RecyclerHistory"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="173dp"
+        android:layout_marginTop="15dp"
+        android:text="Поиск" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchResultsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="239dp"
-        android:layout_below="@+id/searchButton"
-        android:layout_marginTop="7dp"
-        android:visibility="gone" />
+        android:layout_height="225dp"
+        android:layout_below="@id/searchButton"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="21dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="280dp" />
+        android:layout_height="161dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp" />
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <!-- Кнопка для обновления данных -->
+
+    <!-- Кнопка для очистки истории -->
+
+    <!-- Текст для отображения состояния результата -->
+
+    <Button
+        android:id="@+id/buttonRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/RecyclerHistory"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="25dp"
+        android:text="Обновить" />
+
+    <Button
+        android:id="@+id/buttonClearHistory"
+        android:layout_width="133dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/RecyclerHistory"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="16dp"
+        android:text="Очистить историю" />
 
     <TextView
         android:id="@+id/resultTextView"
@@ -30,51 +109,4 @@
         android:text="Loading..."
         android:visibility="gone"
         android:textSize="18sp"/>
-
-    <!-- Элемент для отображения состояния загрузки -->
-
-    <Button
-        android:id="@+id/buttonRefresh"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/searchEditText"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="28dp"
-        android:layout_toEndOf="@+id/searchButton"
-        android:text="Обновить" />
-
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
-
-    <!-- Поле ввода для поиска -->
-    <EditText
-        android:id="@+id/searchEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/recyclerView"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="71dp"
-        android:layout_marginEnd="16dp"
-        android:hint="Введите запрос"
-        android:inputType="text"
-        android:minHeight="48dp" />
-
-    <!-- Кнопка для выполнения поиска -->
-    <Button
-        android:id="@+id/searchButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/searchEditText"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="63dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="70dp"
-        android:text="Поиск" />
-
 </RelativeLayout>
