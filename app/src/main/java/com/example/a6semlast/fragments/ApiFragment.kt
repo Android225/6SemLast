@@ -1,6 +1,9 @@
 package com.example.a6semlast.fragments
 
 import android.os.Bundle
+import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -238,6 +241,42 @@ class ApiFragment : Fragment() {
             Log.d("ApiFragment", "Clear History button clicked") // Отладочное сообщение
             clearSearchHistory()
         }
+
+        // Добавляем TextWatcher к EditText для отслеживания изменений в тексте
+        searchEditText.addTextChangedListener(textWatcher)
     }
 
+
+    private val handler = Handler()
+
+    private val searchRunnable = Runnable {
+        val query = searchEditText.text.toString()
+        if (query.isNotEmpty()) {
+            searchHolidays(query)
+            addSearchQuery(query)
+            updateSearchHistory()
+        }
+    }
+
+    private val delayMilliseconds = 2000L // Задержка в 2 секунды
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            // Ничего не делаем
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            // Ничего не делаем
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            handler.removeCallbacks(searchRunnable) // Очищаем предыдущий запланированный поиск
+            handler.postDelayed(searchRunnable, delayMilliseconds) // Планируем новый поиск через 2 секунды
+        }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Удаляем TextWatcher при уничтожении представления (фрагмента)
+        searchEditText.removeTextChangedListener(textWatcher)
+    }
 }
