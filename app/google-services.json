@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1061870169062",
+    "project_id": "planmyday-ed065",
+    "storage_bucket": "planmyday-ed065.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061870169062:android:94b3d3d96e3084c7d34427",
+        "android_client_info": {
+          "package_name": "com.example.a6semlast"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4g6NazPBV-eZe5bFfVGtTyVgnq64axBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
