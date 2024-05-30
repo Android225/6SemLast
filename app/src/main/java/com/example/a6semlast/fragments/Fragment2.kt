@@ -1,7 +1,6 @@
 package com.example.a6semlast.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.a6semlast.R
 import com.example.a6semlast.Task
 import com.example.a6semlast.TaskAdapter
+
 import com.google.firebase.database.*
 
 class Fragment2 : Fragment() {
@@ -46,14 +46,10 @@ class Fragment2 : Fragment() {
                     task?.let { tasksList.add(it) }
                 }
                 tasksAdapter.notifyDataSetChanged()
-
-                // Log the number of tasks loaded
-                Log.d("Fragment2", "Number of tasks loaded: ${tasksList.size}")
             }
 
             override fun onCancelled(error: DatabaseError) {
                 // Обработка ошибок
-                Log.e("Fragment2", "Database error: ${error.message}")
             }
         })
 
