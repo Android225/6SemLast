@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_fragment13_to_loop_fragment2"
             app:destination="@id/loop_fragment2" />
+        <action
+            android:id="@+id/action_fragment13_to_addFragment"
+            app:destination="@id/addFragment" />
     </fragment>
     <fragment
         android:id="@+id/fragment23"
@@ -65,4 +68,9 @@
         android:name="com.example.a6semlast.ThemeSwitcherFragment"
         android:label="fragment_theme_switcher2"
         tools:layout="@layout/fragment_theme_switcher2" />
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="com.example.a6semlast.fragments.AddFragment"
+        android:label="fragment_add"
+        tools:layout="@layout/fragment_add" />
 </navigation>

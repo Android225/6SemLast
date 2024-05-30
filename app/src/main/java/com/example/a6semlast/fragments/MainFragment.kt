@@ -26,9 +26,12 @@ class MainFragment : Fragment() {
         val bF1 = view.findViewById<Button>(R.id.buttonLogin)
         val bF2 = view.findViewById<Button>(R.id.buttonapi)
         val bF3 = view.findViewById<Button>(R.id.buttonnight)
+
+
         val controller = findNavController()
         bF1.setOnClickListener {controller.navigate(R.id.fragment13)}
         bF2.setOnClickListener {controller.navigate(R.id.apiFragment2)}
         bF3.setOnClickListener { controller.navigate(R.id.themeSwitcherFragment2) }
+
     }
 }

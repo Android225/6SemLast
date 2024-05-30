@@ -1,6 +1,7 @@
 package com.example.a6semlast.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.a6semlast.R
 import com.example.a6semlast.Task
 import com.example.a6semlast.TaskAdapter
+import com.google.firebase.database.*
 
 class Fragment2 : Fragment() {
+
+    private val database = FirebaseDatabase.getInstance()
+    private val tasksReference = database.getReference("tasks")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,25 +30,40 @@ class Fragment2 : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Пример данных
-        val tasks = listOf(
-            Task("Task A", "Description A"),
-            Task("Task B", "Description B"),
-            Task("Task C", "Description C")
-        )
+        // Инициализация ListView
+        val listViewTasks = view.findViewById<ListView>(R.id.listViewTasks)
 
-        // Получаем ListView и устанавливаем адаптер
-        val listViewTasks2 = view.findViewById<ListView>(R.id.listViewTasks2)
-        val adapter = TaskAdapter(requireContext(), tasks)
-        listViewTasks2.adapter = adapter
+        // Получаем данные о задачах из Firebase
+        val tasksList = mutableListOf<Task>()
+        val tasksAdapter = TaskAdapter(requireContext(), tasksList)
+        listViewTasks.adapter = tasksAdapter
 
-        // Настраиваем кнопки
-        val bHome = view.findViewById<Button>(R.id.buttonHomeCal)
-        val bCalendar = view.findViewById<Button>(R.id.buttonCalendarCal)
-        val bSearch = view.findViewById<Button>(R.id.buttonSearchCal)
+        tasksReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                tasksList.clear()
+                for (taskSnapshot in snapshot.children) {
+                    val task = taskSnapshot.getValue(Task::class.java)
+                    task?.let { tasksList.add(it) }
+                }
+                tasksAdapter.notifyDataSetChanged()
+
+                // Log the number of tasks loaded
+                Log.d("Fragment2", "Number of tasks loaded: ${tasksList.size}")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Обработка ошибок
+                Log.e("Fragment2", "Database error: ${error.message}")
+            }
+        })
+
+        val bF1 = view.findViewById<Button>(R.id.buttonHomeCal)
+        val bF2 = view.findViewById<Button>(R.id.buttonCalendarCal)
+        val bF3 = view.findViewById<Button>(R.id.buttonSearchCal)
+
         val controller = findNavController()
-        bHome.setOnClickListener { controller.navigate(R.id.fragment13) }
-        bCalendar.setOnClickListener { controller.navigate(R.id.fragment23) }
-        bSearch.setOnClickListener { controller.navigate(R.id.loop_fragment2) }
+        bF1.setOnClickListener {controller.navigate(R.id.fragment13)}
+        bF2.setOnClickListener {controller.navigate(R.id.fragment23)}
+        bF3.setOnClickListener {controller.navigate(R.id.loop_fragment2)}
     }
 }

@@ -9,5 +9,13 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grayy">#f5f5f5</color>
     <color name="brion">#6766F6</color>
+    <color name="priority_5">#FF4081</color>
+    <color name="priority_4">#4CAF50</color>
+    <color name="priority_3">#FFEB3B</color>
+    <color name="priority_2">#FF9800</color>
+    <color name="priority_1">#F44336</color>
+    <color name="colorCheckBox">#FFFFFF</color>
 
+    <color name="colorCheckBoxChecked">#FF3700B3</color>
+    <color name="colorCheckBoxUnchecked">#FF018786</color>
 </resources>
