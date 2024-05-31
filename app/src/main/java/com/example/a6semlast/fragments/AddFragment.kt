@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.SeekBar
+import androidx.navigation.fragment.findNavController
 import com.example.a6semlast.R
 import com.example.a6semlast.Task
 import com.google.firebase.database.FirebaseDatabase
@@ -34,6 +35,10 @@ class AddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val bF1 = view.findViewById<Button>(R.id.buttonbackToFR1)
+        val controller = findNavController()
+        bF1.setOnClickListener { controller.navigate(R.id.fragment13) }
 
         // Инициализация полей ввода
         titleEditText = view.findViewById(R.id.editTextTitle)
@@ -81,4 +86,6 @@ class AddFragment : Fragment() {
         // Сбросить приоритет на средний
         seekBarPriority.progress = 2
     }
+
+
 }

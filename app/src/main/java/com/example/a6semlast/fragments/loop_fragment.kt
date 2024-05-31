@@ -4,46 +4,79 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ListView
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.a6semlast.R
+import com.example.a6semlast.Task
+import com.example.a6semlast.TaskAdapter
+import com.google.firebase.database.*
+
 class loop_fragment : Fragment() {
     private lateinit var editTextSearch: EditText
+    private lateinit var listViewSearchResults: ListView
+    private lateinit var taskAdapter: TaskAdapter
+    private lateinit var database: DatabaseReference
+    private val originalTasks: MutableList<Task> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_loop_fragment, container, false)
         editTextSearch = view.findViewById(R.id.editTextSearch)
+        listViewSearchResults = view.findViewById(R.id.listViewSearchResults)
+        database = FirebaseDatabase.getInstance().getReference("tasks")
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val buttonBack = view.findViewById<Button>(R.id.buttonBack)
-        val buttonHomeLp = view.findViewById<Button>(R.id.buttonHomeLp)
-        val buttonCalendarLp = view.findViewById<Button>(R.id.buttonCalendarLp)
-        val buttonSearchLp = view.findViewById<Button>(R.id.buttonSearchLp)
-        val buttonClear = view.findViewById<Button>(R.id.buttonClear)
+        // Инициализация адаптера
+        taskAdapter = TaskAdapter(requireContext(), mutableListOf())
+        listViewSearchResults.adapter = taskAdapter
 
+        // Добавление обработчика текстового поля для поиска
         editTextSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                // Показать кнопку "Очистить", если текст в поле ввода не пустой
-                buttonClear.visibility = if (s.isNullOrEmpty()) View.GONE else View.VISIBLE
+                filterTasks(s.toString()) // Фильтрация задач по тексту
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
+
+        // Получение данных из Firebase и отображение их в списке
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                originalTasks.clear()
+                for (snapshot in dataSnapshot.children) {
+                    val task = snapshot.getValue(Task::class.java)
+                    task?.let {
+                        originalTasks.add(it)
+                    }
+                }
+                filterTasks(editTextSearch.text.toString())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Ошибка при загрузке данных из Firebase
+            }
+        })
+
+        // Код для кнопок и других действий на вашем фрагменте
+        val buttonBack = view.findViewById<Button>(R.id.buttonBack)
+        val buttonHomeLp = view.findViewById<Button>(R.id.buttonHomeLp)
+        val buttonCalendarLp = view.findViewById<Button>(R.id.buttonCalendarLp)
+        val buttonSearchLp = view.findViewById<Button>(R.id.buttonSearchLp)
+        val buttonClear = view.findViewById<Button>(R.id.buttonClear)
 
         buttonClear.setOnClickListener {
             editTextSearch.text = null
@@ -67,15 +100,11 @@ class loop_fragment : Fragment() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString("searchQuery", editTextSearch.text.toString())
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        savedInstanceState?.getString("searchQuery")?.let { searchQuery ->
-            editTextSearch.setText(searchQuery)
+    private fun filterTasks(text: String) {
+        val filteredTasks = originalTasks.filter { task ->
+            task.title.contains(text, ignoreCase = true) || task.description.contains(text, ignoreCase = true)
         }
+        taskAdapter.clear()
+        taskAdapter.addAll(filteredTasks)
     }
 }

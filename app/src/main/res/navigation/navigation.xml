@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_mainFragment2_to_themeSwitcherFragment2"
             app:destination="@id/themeSwitcherFragment2" />
+        <action
+            android:id="@+id/action_mainFragment2_to_log_in_fragment"
+            app:destination="@id/log_in_fragment" />
     </fragment>
     <fragment
         android:id="@+id/fragment13"
@@ -72,5 +75,27 @@
         android:id="@+id/addFragment"
         android:name="com.example.a6semlast.fragments.AddFragment"
         android:label="fragment_add"
-        tools:layout="@layout/fragment_add" />
+        tools:layout="@layout/fragment_add" >
+        <action
+            android:id="@+id/action_addFragment_to_fragment13"
+            app:destination="@id/fragment13" />
+    </fragment>
+    <fragment
+        android:id="@+id/sign_in_fragment"
+        android:name="com.example.a6semlast.fragments.sign_in_fragment"
+        android:label="fragment_sign_in_fragment"
+        tools:layout="@layout/fragment_sign_in_fragment" >
+        <action
+            android:id="@+id/action_sign_in_fragment_to_log_in_fragment"
+            app:destination="@id/log_in_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/log_in_fragment"
+        android:name="com.example.a6semlast.fragments.log_in_fragment"
+        android:label="fragment_log_in_fragment"
+        tools:layout="@layout/fragment_log_in_fragment" >
+        <action
+            android:id="@+id/action_log_in_fragment_to_sign_in_fragment"
+            app:destination="@id/sign_in_fragment" />
+    </fragment>
 </navigation>

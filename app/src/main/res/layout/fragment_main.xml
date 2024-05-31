@@ -7,129 +7,15 @@
     tools:context=".fragments.MainFragment"
     >
 
-    <TextView
-        android:id="@+id/textViewTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/btnGOSTART"
+        android:layout_width="392dp"
+        android:layout_height="710dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="@dimen/sorok"
-        android:layout_marginTop="85dp"
-        android:layout_marginEnd="@dimen/sorok"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/Autorization"
-        android:textColor="@color/black"
-        android:textSize="28sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textViewEmailLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewTitle"
-        android:layout_marginStart="@dimen/sorok"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="@dimen/sorok"
-        android:contentDescription="@string/EditTxt_EnterEmail"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/EmailOnRus"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="normal" />
-
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewEmailLabel"
-        android:layout_marginStart="@dimen/sorok"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="@dimen/sorok"
-        android:background="@drawable/rounded_edittext"
-        android:fontFamily="sans-serif-medium"
-        android:hint="@string/EditTxt_EnterEmail"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp" />
-
-    <TextView
-        android:id="@+id/textViewPasswordLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextEmail"
-        android:layout_marginStart="@dimen/sorok"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="@dimen/sorok"
-        android:contentDescription="@string/EditTextEnterPassword"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/TxtPassword"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="normal" />
-
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewPasswordLabel"
-        android:layout_marginStart="@dimen/sorok"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="@dimen/sorok"
-        android:background="@drawable/rounded_edittext"
-        android:fontFamily="sans-serif-medium"
-        android:hint="@string/EditTextEnterPassword"
-        android:inputType="textPassword"
-        android:minHeight="48dp" />
-
-    <Button
-        android:id="@+id/buttonLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editTextPassword"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="70dp"
-        android:background="@drawable/rounded_button"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/Enter"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF" />
-
-    <Button
-        android:id="@+id/buttonRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/buttonLogin"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="110dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="110dp"
-        android:background="@drawable/rounded_button"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/RegistrationToRus"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF" />
-
-    <Button
-        android:id="@+id/buttonapi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonRegister"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="46dp"
-        android:text="Button" />
-
-    <Button
-        android:id="@+id/buttonnight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonRegister"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="57dp"
-        android:layout_marginTop="43dp"
-        android:text="Button" />
+        android:backgroundTint="@color/white"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </RelativeLayout>

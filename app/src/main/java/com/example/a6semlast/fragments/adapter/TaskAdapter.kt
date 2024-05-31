@@ -1,5 +1,3 @@
-package com.example.a6semlast.fragments.adapter
-
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,11 +6,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.example.a6semlast.R
 import com.example.a6semlast.Task
 
-class TaskAdapter(context: Context, private val tasks: List<Task>) :
+class TaskAdapter(context: Context, private val tasks: MutableList<Task>) :
     ArrayAdapter<Task>(context, 0, tasks) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -27,25 +24,19 @@ class TaskAdapter(context: Context, private val tasks: List<Task>) :
         textViewDescription.text = task.description
         checkBoxCompleted.isChecked = task.completed
 
-        // Log the priority
-        Log.d("TaskAdapter", "Task Priority: ${task.priority}")
-
-        // Set checkbox background color based on task priority
-        checkBoxCompleted.background = ContextCompat.getDrawable(context, R.drawable.rounded_checkbox)
-
         return view
     }
 
-    private fun getPriorityColor(priority: Int): Int {
-        val colorResId = when (priority) {
-            5 -> R.color.priority_5
-            4 -> R.color.priority_4
-            3 -> R.color.priority_3
-            2 -> R.color.priority_2
-            1 -> R.color.priority_1
-            else -> R.color.grayy
+    fun filter(text: String) {
+        val filteredTasks = if (text.isEmpty()) {
+            tasks.toList() // Вернуть полный список, если текст пустой
+        } else {
+            tasks.filter { task ->
+                task.title.contains(text, ignoreCase = true) || task.description.contains(text, ignoreCase = true)
+            }
         }
-        Log.d("TaskAdapter", "Priority: $priority, ColorResId: $colorResId")
-        return colorResId
+        clear() // Очистить текущий список
+        addAll(filteredTasks) // Добавить отфильтрованные задачи в адаптер
+        notifyDataSetChanged() // Обновить отображение списка
     }
 }

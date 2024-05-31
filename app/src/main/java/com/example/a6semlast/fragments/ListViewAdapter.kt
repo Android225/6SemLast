@@ -1,7 +1,7 @@
 package com.example.a6semlast
 
 import android.content.Context
-import android.util.Log
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +15,11 @@ class TaskAdapter(context: Context, private val tasks: MutableList<Task>) :
     ArrayAdapter<Task>(context, 0, tasks) {
 
     private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("tasks")
+    private val originalTasks: MutableList<Task> = mutableListOf()
+
+    init {
+        originalTasks.addAll(tasks)
+    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.list_item, parent, false)
@@ -29,27 +34,36 @@ class TaskAdapter(context: Context, private val tasks: MutableList<Task>) :
         textViewDescription.text = task.description
         textViewDate.text = formatDate(task.day, task.month, task.year)
 
-        // Установка состояния чекбокса без слушателя
         checkBoxCompleted.setOnCheckedChangeListener(null)
         checkBoxCompleted.isChecked = task.completed
 
         checkBoxCompleted.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                Log.d("TaskAdapter", "Attempting to remove task with ID: ${task.id}")
                 database.child(task.id).removeValue().addOnCompleteListener { taskRemoval ->
                     if (taskRemoval.isSuccessful) {
-                        Log.d("TaskAdapter", "Successfully removed task with ID: ${task.id}")
                         tasks.remove(task)
                         notifyDataSetChanged()
                     } else {
-                        Log.e("TaskAdapter", "Failed to remove task with ID: ${task.id}")
-                        checkBoxCompleted.isChecked = false // Восстановление состояния чекбокса в случае ошибки
+                        checkBoxCompleted.isChecked = false
                     }
                 }
             }
         }
 
         return view
+    }
+
+    fun filter(text: String) {
+        tasks.clear()
+        if (TextUtils.isEmpty(text)) {
+            tasks.addAll(originalTasks)
+        } else {
+            val filteredTasks = originalTasks.filter { task ->
+                task.title.contains(text, ignoreCase = true) || task.description.contains(text, ignoreCase = true)
+            }
+            tasks.addAll(filteredTasks)
+        }
+        notifyDataSetChanged()
     }
 
     private fun formatDate(day: Int, month: Int, year: Int): String {

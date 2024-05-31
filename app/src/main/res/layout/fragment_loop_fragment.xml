@@ -48,8 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/clear"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <!-- Пустой элемент для заполнения пространства между кнопками -->
         <View
@@ -72,13 +71,6 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@id/bottomPanel"
-        android:background="@android:color/darker_gray" />
-
     <!-- Панель с кнопками -->
     <LinearLayout
         android:id="@+id/bottomPanel"
@@ -100,33 +92,30 @@
             android:background="@android:color/transparent"
             android:drawableTop="@drawable/home4"
             android:drawablePadding="8dp"
-
             android:contentDescription="@string/Homs"/>
 
         <!-- Кнопка "Календарь" -->
         <Button
             android:id="@+id/buttonCalendarLp"
             android:text=""
-            android:layout_width="@dimen/zero"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:drawableTop="@drawable/calendar2"
             android:drawablePadding="15dp"
-
             android:contentDescription="@string/loops"/>
 
         <!-- Кнопка "Поиск" -->
         <Button
             android:id="@+id/buttonSearchLp"
-            android:layout_width="@dimen/zero"
+            android:layout_width="0dp"
             android:text=""
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:drawableTop="@drawable/loop1"
             android:drawablePadding="@dimen/margin_small"
-
             android:contentDescription="@string/serchs"/>
 
     </LinearLayout>
