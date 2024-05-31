@@ -16,13 +16,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.a6semlast.R
 import com.example.a6semlast.Task
 import com.example.a6semlast.TaskAdapter
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class loop_fragment : Fragment() {
     private lateinit var editTextSearch: EditText
     private lateinit var listViewSearchResults: ListView
     private lateinit var taskAdapter: TaskAdapter
-    private lateinit var database: DatabaseReference
+    private lateinit var userTasksReference: DatabaseReference
     private val originalTasks: MutableList<Task> = mutableListOf()
 
     override fun onCreateView(
@@ -31,8 +32,12 @@ class loop_fragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_loop_fragment, container, false)
         editTextSearch = view.findViewById(R.id.editTextSearch)
-        listViewSearchResults = view.findViewById(R.id.listViewSearchResults)
-        database = FirebaseDatabase.getInstance().getReference("tasks")
+        listViewSearchResults = view.findViewById(R.id.listViewSearchResults
+        )
+
+        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+        userTasksReference = FirebaseDatabase.getInstance().getReference("tasks/users/$currentUserUid/tasks")
+
         return view
     }
 
@@ -54,7 +59,7 @@ class loop_fragment : Fragment() {
         })
 
         // Получение данных из Firebase и отображение их в списке
-        database.addValueEventListener(object : ValueEventListener {
+        userTasksReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 originalTasks.clear()
                 for (snapshot in dataSnapshot.children) {

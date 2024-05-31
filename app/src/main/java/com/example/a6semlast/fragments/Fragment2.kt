@@ -12,12 +12,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.a6semlast.R
 import com.example.a6semlast.Task
 import com.example.a6semlast.TaskAdapter
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class Fragment2 : Fragment() {
 
-    private val database = FirebaseDatabase.getInstance()
-    private val tasksReference = database.getReference("tasks")
+    private lateinit var listViewTasks: ListView
+    private lateinit var tasksAdapter: TaskAdapter
+    private lateinit var userTasksReference: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,19 +31,22 @@ class Fragment2 : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val listViewTasks = view.findViewById<ListView>(R.id.listViewTasks)
-        val tasksList = mutableListOf<Task>()
-        val tasksAdapter = TaskAdapter(requireContext(), tasksList)
+        listViewTasks = view.findViewById(R.id.listViewTasks)
+        tasksAdapter = TaskAdapter(requireContext(), mutableListOf())
         listViewTasks.adapter = tasksAdapter
 
-        tasksReference.addValueEventListener(object : ValueEventListener {
+        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+        userTasksReference = FirebaseDatabase.getInstance().getReference("tasks/users/$currentUserUid/tasks")
+
+        userTasksReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                tasksList.clear()
+                val tasksList = mutableListOf<Task>()
                 for (taskSnapshot in snapshot.children) {
                     val task = taskSnapshot.getValue(Task::class.java)
                     task?.let { tasksList.add(it) }
                 }
-                tasksAdapter.notifyDataSetChanged()
+                tasksAdapter.clear()
+                tasksAdapter.addAll(tasksList)
             }
 
             override fun onCancelled(error: DatabaseError) {

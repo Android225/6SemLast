@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.TextView
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
 class TaskAdapter(context: Context, private val tasks: MutableList<Task>) :
     ArrayAdapter<Task>(context, 0, tasks) {
 
-    private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("tasks")
+    private val currentUserUid: String? = FirebaseAuth.getInstance().currentUser?.uid
+    private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("tasks/users/$currentUserUid/tasks")
     private val originalTasks: MutableList<Task> = mutableListOf()
 
     init {
@@ -38,16 +39,8 @@ class TaskAdapter(context: Context, private val tasks: MutableList<Task>) :
         checkBoxCompleted.isChecked = task.completed
 
         checkBoxCompleted.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                database.child(task.id).removeValue().addOnCompleteListener { taskRemoval ->
-                    if (taskRemoval.isSuccessful) {
-                        tasks.remove(task)
-                        notifyDataSetChanged()
-                    } else {
-                        checkBoxCompleted.isChecked = false
-                    }
-                }
-            }
+            task.completed = isChecked
+            database.child(task.id).setValue(task)
         }
 
         return view

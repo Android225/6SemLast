@@ -12,6 +12,7 @@ import android.widget.SeekBar
 import androidx.navigation.fragment.findNavController
 import com.example.a6semlast.R
 import com.example.a6semlast.Task
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 
@@ -22,8 +23,12 @@ class AddFragment : Fragment() {
     private lateinit var datePicker: DatePicker
     private lateinit var seekBarPriority: SeekBar
 
+    private val currentUserUid: String by lazy {
+        FirebaseAuth.getInstance().currentUser?.uid ?: ""
+    }
+
     private val database = FirebaseDatabase.getInstance()
-    private val tasksReference = database.getReference("tasks")
+    private val userTasksReference = database.getReference("tasks/users/$currentUserUid/tasks")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +63,7 @@ class AddFragment : Fragment() {
             val priority = seekBarPriority.progress + 1
 
             // Создаем новую задачу
-            val newTaskId = tasksReference.push().key ?: ""
+            val newTaskId = userTasksReference.push().key ?: ""
             val newTask = Task(
                 newTaskId,
                 title,
@@ -70,7 +75,7 @@ class AddFragment : Fragment() {
             )
 
             // Добавляем задачу в базу данных Firebase
-            tasksReference.child(newTaskId).setValue(newTask)
+            userTasksReference.child(newTaskId).setValue(newTask)
 
             // Очищаем поля ввода
             clearFields()
@@ -86,6 +91,4 @@ class AddFragment : Fragment() {
         // Сбросить приоритет на средний
         seekBarPriority.progress = 2
     }
-
-
 }

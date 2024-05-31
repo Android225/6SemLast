@@ -12,16 +12,18 @@ import androidx.navigation.fragment.findNavController
 import com.example.a6semlast.R
 import com.example.a6semlast.Task
 import com.example.a6semlast.TaskAdapter
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 class Fragment1 : Fragment() {
 
     private lateinit var listView: ListView
     private lateinit var tasksList: ArrayList<Task>
     private lateinit var adapter: TaskAdapter
-    private lateinit var database: DatabaseReference
+    private lateinit var userTasksReference: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +36,8 @@ class Fragment1 : Fragment() {
         adapter = TaskAdapter(requireContext(), tasksList)
         listView.adapter = adapter
 
-        database = FirebaseDatabase.getInstance().getReference("tasks")
+        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+        userTasksReference = FirebaseDatabase.getInstance().getReference("tasks/users/$currentUserUid/tasks")
 
         loadTasksForToday()
 
@@ -45,7 +48,7 @@ class Fragment1 : Fragment() {
         val currentDate = getCurrentDate()
         Log.d("Fragment1", "Loading tasks for today: $currentDate")
 
-        database.addValueEventListener(object : ValueEventListener {
+        userTasksReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 tasksList.clear()
                 for (taskSnapshot in snapshot.children) {
