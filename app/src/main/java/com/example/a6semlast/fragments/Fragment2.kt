@@ -1,17 +1,17 @@
 package com.example.a6semlast.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ListView
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.a6semlast.R
 import com.example.a6semlast.Task
 import com.example.a6semlast.TaskAdapter
-
 import com.google.firebase.database.*
 
 class Fragment2 : Fragment() {
@@ -23,17 +23,13 @@ class Fragment2 : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment2, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Инициализация ListView
         val listViewTasks = view.findViewById<ListView>(R.id.listViewTasks)
-
-        // Получаем данные о задачах из Firebase
         val tasksList = mutableListOf<Task>()
         val tasksAdapter = TaskAdapter(requireContext(), tasksList)
         listViewTasks.adapter = tasksAdapter
@@ -49,7 +45,7 @@ class Fragment2 : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Обработка ошибок
+                Log.e("Fragment2", "Database error: ${error.message}")
             }
         })
 
@@ -58,8 +54,8 @@ class Fragment2 : Fragment() {
         val bF3 = view.findViewById<Button>(R.id.buttonSearchCal)
 
         val controller = findNavController()
-        bF1.setOnClickListener {controller.navigate(R.id.fragment13)}
-        bF2.setOnClickListener {controller.navigate(R.id.fragment23)}
-        bF3.setOnClickListener {controller.navigate(R.id.loop_fragment2)}
+        bF1.setOnClickListener { controller.navigate(R.id.fragment13) }
+        bF2.setOnClickListener { controller.navigate(R.id.fragment23) }
+        bF3.setOnClickListener { controller.navigate(R.id.loop_fragment2) }
     }
 }

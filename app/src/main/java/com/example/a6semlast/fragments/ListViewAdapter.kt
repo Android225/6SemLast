@@ -8,14 +8,13 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.TextView
-import com.example.a6semlast.R
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class TaskAdapter(context: Context, private val tasks: MutableList<Task>) :
     ArrayAdapter<Task>(context, 0, tasks) {
 
-    private val database = FirebaseDatabase.getInstance()
-    private val tasksReference = database.getReference("tasks")
+    private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("tasks")
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.list_item, parent, false)
@@ -23,32 +22,37 @@ class TaskAdapter(context: Context, private val tasks: MutableList<Task>) :
 
         val textViewTitle = view.findViewById<TextView>(R.id.textViewTitle)
         val textViewDescription = view.findViewById<TextView>(R.id.textViewDescription)
-        val textViewDate = view.findViewById<TextView>(R.id.textViewDate) // Добавлено для даты
+        val textViewDate = view.findViewById<TextView>(R.id.textViewDate)
         val checkBoxCompleted = view.findViewById<CheckBox>(R.id.checkBoxCompleted)
 
         textViewTitle.text = task.title
         textViewDescription.text = task.description
-        textViewDate.text = formatDate(task.day, task.month, task.year) // Устанавливаем дату
+        textViewDate.text = formatDate(task.day, task.month, task.year)
 
-        // Log the priority
-        Log.d("TaskAdapter", "Task Priority: ${task.priority}")
+        // Установка состояния чекбокса без слушателя
+        checkBoxCompleted.setOnCheckedChangeListener(null)
+        checkBoxCompleted.isChecked = task.completed
 
-        // Set checkbox background color based on task priority
-        checkBoxCompleted.setBackgroundResource(R.drawable.rounded_checkbox)
-
-        // Set up listener for checkbox click event
-        checkBoxCompleted.setOnClickListener {
-            // Remove the task from the database
-            tasksReference.child(task.id).removeValue()
-            // Remove the task from the list
-            tasks.removeAt(position)
-            notifyDataSetChanged() // Notify the adapter that the data set has changed
+        checkBoxCompleted.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                Log.d("TaskAdapter", "Attempting to remove task with ID: ${task.id}")
+                database.child(task.id).removeValue().addOnCompleteListener { taskRemoval ->
+                    if (taskRemoval.isSuccessful) {
+                        Log.d("TaskAdapter", "Successfully removed task with ID: ${task.id}")
+                        tasks.remove(task)
+                        notifyDataSetChanged()
+                    } else {
+                        Log.e("TaskAdapter", "Failed to remove task with ID: ${task.id}")
+                        checkBoxCompleted.isChecked = false // Восстановление состояния чекбокса в случае ошибки
+                    }
+                }
+            }
         }
 
         return view
     }
 
     private fun formatDate(day: Int, month: Int, year: Int): String {
-        return String.format("%02d.%02d.%04d", day, month + 1, year) // Форматируем дату
+        return String.format("%02d.%02d.%04d", day, month + 1, year)
     }
- }
+}
